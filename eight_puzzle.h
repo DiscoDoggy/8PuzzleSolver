@@ -13,8 +13,12 @@ class Eight_puzzle {
 
     public:
         
-        State_node* init_node;
-        State_node* goal_node;
+        Eight_puzzle();
+        Eight_puzzle(vector<int> starting, vector<int> goal);
+
+
+        vector<int> init_node_vals;
+        vector<int> goal_node_vals;
         stack<State_node*> path_taken;
         int num_nodes_expanded;
         int max_nodes_frontier;

@@ -10,6 +10,9 @@ class State_node {
     
     public:
 
+        State_node();
+        State_node(int node_ident, State_node* pred, int new_node_cost, vector<int>state_values);
+
         int node_id;
         State_node *parent_state;
         int cost_to_node; // same as depth all costs are the same

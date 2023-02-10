@@ -22,14 +22,16 @@ class Eight_puzzle {
         vector<int> goal_node_vals;
         stack<State_node*> path_taken;
         unordered_map<int, vector<int>> seen_states;
+        vector<vector<int>>states_seen;
 
         int num_nodes_expanded;
         int max_nodes_frontier;
 
         void print_path_taken();
-        stack<State_node*> uniform_cost_search();
+        void uniform_cost_search();
         stack<State_node*> a_star_misplaced();
         stack<State_node*> a_star_euclid();
+        int misplaced_heuristic();
         //deciper path 
 
 

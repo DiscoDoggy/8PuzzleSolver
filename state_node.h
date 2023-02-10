@@ -17,6 +17,7 @@ class State_node {
         State_node *parent_state;
         int cost_to_node; // same as depth all costs are the same
         vector<int> eight_puzzle_node_values;
+        int heuristic_value;
 
 
         int generate_node_id(vector<int> to_id_vec);

@@ -62,16 +62,16 @@ void display_menu() {
     Eight_puzzle problem(puzzle_values, {1,2,3,4,5,6,7,8,0});
     problem.print_path_taken();
 
-    stack<State_node*>solution = problem.uniform_cost_search();
+    problem.uniform_cost_search();
     State_node* temp_node = nullptr;
 
-    while(!solution.empty()) {
-        temp_node = solution.top();
-        cout << endl;
-        //temp_node->print_node_state();
-        cout << endl;
-        solution.pop();
-    }
+    // while(!solution.empty()) {
+    //     temp_node = solution.top();
+    //     //cout << endl;
+    //     // temp_node->print_node_state();
+    //     // cout << endl;
+    //     solution.pop();
+    // }
 
 
 }

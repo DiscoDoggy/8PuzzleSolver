@@ -58,6 +58,12 @@ void display_menu() {
 
     print_one_dim_as_two(puzzle_values);
 
+    Eight_puzzle problem(puzzle_values, {1,2,3,4,5,6,7,8,0});
+    problem.print_path_taken();
+
+    stack<State_node*>solution = problem.uniform_cost_search();
+
+
 }
 
 vector<int> get_puzzle_vals_from_user() {

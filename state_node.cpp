@@ -18,9 +18,15 @@ State_node::State_node(int node_ident, State_node* pred, int new_node_cost, vect
 }
 
 int State_node::generate_node_id() {
+    vector<int> index_enumeration = {11,12,13,14,15,16,17,18,19};
 
+    int id = 0;
 
-    return 0;
+    for (int i = 0; i < eight_puzzle_node_values.size(); i++) {
+        id += eight_puzzle_node_values.at(i) * index_enumeration.at(i);
+    }
+
+    return id;
 }
 
 vector<int> State_node::get_eight_puzzle_node_values() {
@@ -31,10 +37,92 @@ vector<int> State_node::get_eight_puzzle_node_values() {
 
 vector<State_node*> State_node::nodes_expanded() {
     vector<State_node*>expanded_nodes;
+
+    int index_where_0_is = -1;
+    
+    for (int i = 0; i < eight_puzzle_node_values.size(); i++) {
+        
+        if (eight_puzzle_node_values.at(i) == 0) {
+            index_where_0_is = i;
+        }
+    }
+
+    if (index_where_0_is == -1 || index_where_0_is > 8 || index_where_0_is < 0) {
+        cout << "ERR: NO BLANK TILE... EXITING" << endl;
+        exit(-1);
+    }
+
+    State_node* temp_node = nullptr;
+
+    if (index_where_0_is == 0 || index_where_0_is == 1 || index_where_0_is == 2 
+    || index_where_0_is == 3 || index_where_0_is == 4 || index_where_0_is == 5) 
+    
+    {
+
+        //swapdown
+
+
+    }
+
+
+    if (index_where_0_is >= 3 && index_where_0_is <=8) {
+
+            //swap up
+
+    }
+
+
+    if (index_where_0_is != 0 && index_where_0_is != 3 && index_where_0_is != 6) {
+
+            //swap left
+
+
+    }
+
+    if (index_where_0_is != 2 && index_where_0_is != 5 && index_where_0_is != 8) {
+
+            //swap right
+    }
+
+
     return expanded_nodes;
 
 }
 
+State_node* State_node::swap_down() {
+    
+}
+
+State_node* State_node::swap_up() {
+
+}
+
+State_node* State_node::swap_left() {
+
+}
+
+State_node* State_node::swap_right() {
+    
+}
+
+
 void State_node::print_node_state() {
-    return;
+    for(int i = 0; i < eight_puzzle_node_values.size(); i++) {
+
+        
+
+        if ((i + 1) % 3 == 0) {
+            cout << eight_puzzle_node_values.at(i);
+            cout << endl;
+        }
+
+        else {
+            //cout << "i + 1 " << i + 1 << endl;
+            cout << eight_puzzle_node_values.at(i) << " ";
+        }
+
+
+    }
+
+    cout << endl;
 }

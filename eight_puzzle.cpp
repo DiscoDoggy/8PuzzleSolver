@@ -15,10 +15,17 @@ Eight_puzzle::Eight_puzzle(vector<int> starting, vector<int> goal) {
 }
 
 void Eight_puzzle::print_path_taken() {
+    // for (int i = 0; i < this->init_node_vals.size(); i++) {
+    //     cout << this->init_node_vals.at(i) << ' ';
+    // }
     return;
 }
 
 stack<State_node*> Eight_puzzle::uniform_cost_search() {
+
+    State_node init_node(0,nullptr, 0, init_node_vals);
+    init_node.print_node_state();
+
     stack<State_node*>solution_path;
     return solution_path;
 }

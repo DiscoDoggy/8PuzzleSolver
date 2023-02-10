@@ -24,6 +24,11 @@ class State_node {
         vector<State_node*> nodes_expanded(); //this does the node expansion
         void print_node_state();
 
+        State_node* swap_down();
+        State_node* swap_up();
+        State_node* swap_left();
+        State_node* swap_right();
+
 
 
 

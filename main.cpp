@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stack>
 
 #include "eight_puzzle.h"
 #include "state_node.h"
@@ -62,6 +63,15 @@ void display_menu() {
     problem.print_path_taken();
 
     stack<State_node*>solution = problem.uniform_cost_search();
+    State_node* temp_node = nullptr;
+
+    while(!solution.empty()) {
+        temp_node = solution.top();
+        cout << endl;
+        //temp_node->print_node_state();
+        cout << endl;
+        solution.pop();
+    }
 
 
 }

@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 
+#include "eight_puzzle.h"
+#include "state_node.h"
+
 using namespace std;
 
 int ROW_SIZE = 3;

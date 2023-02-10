@@ -19,15 +19,15 @@ class State_node {
         vector<int> eight_puzzle_node_values;
 
 
-        int generate_node_id();
+        int generate_node_id(vector<int> to_id_vec);
         vector<int> get_eight_puzzle_node_values();
         vector<State_node*> nodes_expanded(); //this does the node expansion
         void print_node_state();
 
-        State_node* swap_down();
-        State_node* swap_up();
-        State_node* swap_left();
-        State_node* swap_right();
+        State_node* swap_down(int zero_index, State_node* curr_node);
+        State_node* swap_up(int zero_index, State_node* curr_node);
+        State_node* swap_left(int zero_index, State_node* curr_node);
+        State_node* swap_right(int zero_index,State_node* curr_node);
 
 
 

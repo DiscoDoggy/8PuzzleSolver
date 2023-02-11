@@ -6,9 +6,11 @@
 #include <vector>
 #include <string>
 #include<stack>
+#include <queue>
 #include<unordered_map>
 
 using namespace std;
+typedef pair<int, State_node*> pair_type;
 
 class Eight_puzzle {
 
@@ -32,6 +34,8 @@ class Eight_puzzle {
         stack<State_node*> a_star_misplaced();
         stack<State_node*> a_star_euclid();
         int misplaced_heuristic();
+        void print_repeats();
+        void print_frontier(priority_queue<pair_type,vector<pair_type>,greater<pair_type> > front_to_print);
         //deciper path 
 
 

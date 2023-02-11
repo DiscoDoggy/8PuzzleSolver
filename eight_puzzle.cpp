@@ -104,14 +104,93 @@ void Eight_puzzle::uniform_cost_search() {
     return;
 }
 
-// void Eight_puzzle::a_star_misplaced() {
+void Eight_puzzle::a_star_misplaced() {
+        //use a regular queue.
+    vector<pair<int, State_node*>>frontier;
+    states_seen.clear();
+
+    State_node* first_node = new State_node(0, nullptr, 0, init_node_vals);
+
+    first_node->heuristic_value = misplaced_heuristic(first_node->eight_puzzle_node_values);
+    first_node->utility = first_node->cost_to_node + first_node->heuristic_value;
+    frontier.push_back(make_pair(first_node->utility, first_node));
+
+    State_node* path_node = nullptr;
+    vector<State_node*> expanded_nodes;
+    State_node* expanding_node = nullptr;
+    State_node* temp_node = nullptr;
+    bool is_duplicate = false;
+
+    //vector<State_node*>solution_nodes;
+
+    while (1) {
+        
+        if (frontier.empty()) {
+            cout << "IMPOSSIBLE PUZZLE. FRONTIER EMPTY" << endl;
+            exit(-2);
+        }
+
+        sort(frontier.rbegin(), frontier.rend());
+        pair<int, State_node*> top = frontier.back();
+        frontier.pop_back();
+
+        if (top.second -> eight_puzzle_node_values == goal_node_vals) {
+            path_node = top.second;
+            //solution_nodes.push_back(path_node);
+            print_path_taken(path_node);
+            return;
+            
+            
+
+        }
+
+        states_seen.push_back(top.second->eight_puzzle_node_values);
+        expanding_node = top.second;
+        expanded_nodes = expanding_node->nodes_expanded();
+
+        for(int i = 0; i < expanded_nodes.size(); i++) {
+
+            for (int j = 0; j < states_seen.size(); j++) {
+                
+                if (expanded_nodes.at(i)->eight_puzzle_node_values == states_seen.at(j)) {
+                    is_duplicate = true;
+                } 
+            }
+
+            if (is_duplicate == false) {
+                expanded_nodes.at(i)->heuristic_value = misplaced_heuristic(expanded_nodes.at(i)->eight_puzzle_node_values);
+                expanded_nodes.at(i)->utility = expanded_nodes.at(i)->heuristic_value + expanded_nodes.at(i)->cost_to_node;
+                frontier.push_back(make_pair(expanded_nodes.at(i)->utility, expanded_nodes.at(i)));
+                sort(frontier.rbegin(), frontier.rend());
+
+            }
+
+            is_duplicate = false;
 
 
-// }
 
-// int Eight_puzzle::misplaced_heuristic() {
-    
-// }
+        }
+
+        
+
+    }
+
+    print_path_taken(path_node);
+
+}
+
+int Eight_puzzle::misplaced_heuristic(vector<int> check_misplaced) {
+    int num_misplaced_tiles = 0;
+
+    for (int i = 0; i < goal_node_vals.size(); i++) {
+        if(check_misplaced.at(i) != goal_node_vals.at(i)) {
+            num_misplaced_tiles++;
+        }
+    }
+
+    return num_misplaced_tiles;
+
+}
 
 
 
@@ -224,7 +303,8 @@ void Eight_puzzle::print_path_taken(State_node* sol_path) {
     cout << "\n\n--PRINITING PATH--\n\n";
     while(temp_node != nullptr) {
         temp_node->print_node_state();
-        cout << "cost to node: " << temp_node->cost_to_node << endl << endl;
+        cout << "cost to node: " << temp_node->cost_to_node << endl;
+        cout << "Heuristic: " << temp_node->heuristic_value << endl << endl;
         temp_node = temp_node->parent_state;
     }
 }

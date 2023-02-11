@@ -34,7 +34,7 @@ class Eight_puzzle {
         void uniform_cost_search2();
         void a_star_misplaced();
         stack<State_node*> a_star_euclid();
-        int misplaced_heuristic();
+        int misplaced_heuristic(vector<int> check_misplaced);
         void print_repeats();
         void print_frontier(priority_queue<pair_type,vector<pair_type>,greater<pair_type> > front_to_print);
         //deciper path 

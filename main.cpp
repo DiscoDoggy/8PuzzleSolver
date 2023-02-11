@@ -62,7 +62,8 @@ void display_menu() {
     Eight_puzzle problem(puzzle_values, {1,2,3,4,5,6,7,8,0});
     //problem.print_path_taken();
 
-    problem.uniform_cost_search2();
+    // problem.uniform_cost_search2();
+    problem.a_star_misplaced();
     State_node* temp_node = nullptr;
 
     // while(!solution.empty()) {

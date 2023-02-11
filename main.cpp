@@ -2,11 +2,13 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <chrono>
 
 #include "eight_puzzle.h"
 #include "state_node.h"
 
 using namespace std;
+using namespace std::chrono;
 
 int ROW_SIZE = 3;
 
@@ -73,13 +75,16 @@ void display_menu() {
     int algo_choice = 1;
     cin >> algo_choice;
     cout << endl;
+    
+    auto start = high_resolution_clock::now();
+
 
     if (algo_choice == 1) {
         problem.uniform_cost_search2();
-
     }
 
     else if (algo_choice == 2) {
+        
         problem.a_star_misplaced();
 
     }
@@ -87,6 +92,13 @@ void display_menu() {
     else if (algo_choice == 3) {
         problem.a_star_euclid();
     }
+
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop-start);
+
+    cout << endl << endl;
+    cout << "The searcht took " << duration.count() << " ms." << endl;
+    problem.print_prob_info();
 
 
 }

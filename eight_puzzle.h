@@ -26,8 +26,8 @@ class Eight_puzzle {
         unordered_map<int, vector<int>> seen_states;
         vector<vector<int>>states_seen;
 
-        int num_nodes_expanded;
-        int max_nodes_frontier;
+        int num_nodes_expanded = 0;
+        int max_nodes_frontier = 0;
 
         void print_path_taken(State_node* sol_path);
         void uniform_cost_search();
@@ -41,6 +41,7 @@ class Eight_puzzle {
 
         void print_repeats();
         void print_frontier(priority_queue<pair_type,vector<pair_type>,greater<pair_type> > front_to_print);
+        void print_prob_info();
         //deciper path 
 
 

@@ -131,6 +131,10 @@ void Eight_puzzle::a_star_misplaced() {
             exit(-2);
         }
 
+        if(frontier.size() > max_nodes_frontier) {
+            max_nodes_frontier = frontier.size();
+        }
+
         sort(frontier.rbegin(), frontier.rend());
         pair<int, State_node*> top = frontier.back();
         frontier.pop_back();
@@ -148,6 +152,7 @@ void Eight_puzzle::a_star_misplaced() {
         states_seen.push_back(top.second->eight_puzzle_node_values);
         expanding_node = top.second;
         expanded_nodes = expanding_node->nodes_expanded();
+        num_nodes_expanded += expanded_nodes.size();
 
         for(int i = 0; i < expanded_nodes.size(); i++) {
 
@@ -222,6 +227,10 @@ void Eight_puzzle::a_star_euclid() {
             exit(-2);
         }
 
+        if(frontier.size() > max_nodes_frontier) {
+            max_nodes_frontier = frontier.size();
+        }
+
         sort(frontier.rbegin(), frontier.rend());
         pair<int, State_node*> top = frontier.back();
         frontier.pop_back();
@@ -239,6 +248,7 @@ void Eight_puzzle::a_star_euclid() {
         states_seen.push_back(top.second->eight_puzzle_node_values);
         expanding_node = top.second;
         expanded_nodes = expanding_node->nodes_expanded();
+        num_nodes_expanded += expanded_nodes.size();
 
         for(int i = 0; i < expanded_nodes.size(); i++) {
 
@@ -405,6 +415,10 @@ void Eight_puzzle::uniform_cost_search2() {
             exit(-2);
         }
 
+        if(frontier.size() > max_nodes_frontier) {
+            max_nodes_frontier = frontier.size();
+        }
+
         pair<int, State_node*> top = frontier.front();
         frontier.pop();
 
@@ -416,6 +430,7 @@ void Eight_puzzle::uniform_cost_search2() {
         states_seen.push_back(top.second->eight_puzzle_node_values);
         expanding_node = top.second;
         expanded_nodes = expanding_node->nodes_expanded();
+        num_nodes_expanded+=expanded_nodes.size();
 
         for(int i = 0; i < expanded_nodes.size(); i++) {
 
@@ -449,7 +464,7 @@ void Eight_puzzle::uniform_cost_search2() {
 void Eight_puzzle::print_path_taken(State_node* sol_path) {
     State_node* temp_node = sol_path;
 
-    cout << "\n\n--PRINITING PATH--\n\n";
+    cout << "\n\n--PRINITING PATH (bottom up)--\n\n";
     while(temp_node != nullptr) {
         temp_node->print_node_state();
         cout << "cost to node (Depth): " << temp_node->cost_to_node << endl;
@@ -457,4 +472,12 @@ void Eight_puzzle::print_path_taken(State_node* sol_path) {
         cout << "Misplaced Heuristic: " << temp_node->heuristic_value << endl << endl;
         temp_node = temp_node->parent_state;
     }
+}
+
+void Eight_puzzle::print_prob_info() {
+    cout << "The number of nodes expanded was: " << num_nodes_expanded;
+    cout << endl;
+
+    cout << "The max number of nodes in the frontier was: " << max_nodes_frontier;
+    cout << endl << endl;
 }

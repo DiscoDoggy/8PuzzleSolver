@@ -60,9 +60,9 @@ void display_menu() {
     print_one_dim_as_two(puzzle_values);
 
     Eight_puzzle problem(puzzle_values, {1,2,3,4,5,6,7,8,0});
-    problem.print_path_taken();
+    //problem.print_path_taken();
 
-    problem.uniform_cost_search();
+    problem.uniform_cost_search2();
     State_node* temp_node = nullptr;
 
     // while(!solution.empty()) {

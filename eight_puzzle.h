@@ -29,9 +29,10 @@ class Eight_puzzle {
         int num_nodes_expanded;
         int max_nodes_frontier;
 
-        void print_path_taken();
+        void print_path_taken(State_node* sol_path);
         void uniform_cost_search();
-        stack<State_node*> a_star_misplaced();
+        void uniform_cost_search2();
+        void a_star_misplaced();
         stack<State_node*> a_star_euclid();
         int misplaced_heuristic();
         void print_repeats();

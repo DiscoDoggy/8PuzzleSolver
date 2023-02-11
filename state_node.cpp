@@ -104,7 +104,7 @@ State_node* State_node::swap_down(int zero_index, State_node* curr_node) { //tec
 
     swap(new_puzzle_values.at(zero_index), new_puzzle_values.at(zero_index + 3));
     int new_id = generate_node_id(new_puzzle_values);
-    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node - 1, new_puzzle_values);
+    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node + 1, new_puzzle_values);
 
     return temp_node;
 }
@@ -115,7 +115,7 @@ State_node* State_node::swap_up(int zero_index, State_node* curr_node) {
     
     swap(new_puzzle_values.at(zero_index), new_puzzle_values.at(zero_index - 3));
     int new_id = generate_node_id(new_puzzle_values);
-    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node-1, new_puzzle_values);
+    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node+1, new_puzzle_values);
 
     return temp_node;
 
@@ -127,7 +127,7 @@ State_node* State_node::swap_left(int zero_index, State_node* curr_node) {
     
     swap(new_puzzle_values.at(zero_index), new_puzzle_values.at(zero_index - 1));
     int new_id = generate_node_id(new_puzzle_values);
-    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node-1, new_puzzle_values);
+    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node+1, new_puzzle_values);
 
     return temp_node;
 
@@ -139,7 +139,7 @@ State_node* State_node::swap_right(int zero_index, State_node* curr_node) {
     
     swap(new_puzzle_values.at(zero_index), new_puzzle_values.at(zero_index + 1));
     int new_id = generate_node_id(new_puzzle_values);
-    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node-1, new_puzzle_values);
+    State_node* temp_node = new State_node(new_id, curr_node, curr_node->cost_to_node+1, new_puzzle_values);
 
     return temp_node;
 }

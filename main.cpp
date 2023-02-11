@@ -62,17 +62,31 @@ void display_menu() {
     Eight_puzzle problem(puzzle_values, {1,2,3,4,5,6,7,8,0});
     //problem.print_path_taken();
 
-    // problem.uniform_cost_search2();
-    problem.a_star_misplaced();
-    State_node* temp_node = nullptr;
 
-    // while(!solution.empty()) {
-    //     temp_node = solution.top();
-    //     //cout << endl;
-    //     // temp_node->print_node_state();
-    //     // cout << endl;
-    //     solution.pop();
-    // }
+
+    cout << "Enter your choice of algorithm" << endl;
+    cout << "1. Uniform Cost Search" << endl;
+    cout << "2. A* with Misplaced Tile Heuristic" << endl;
+    cout << "3. A* with the Euclidian Distance Heuristic" << endl;
+    cout << endl;
+
+    int algo_choice = 1;
+    cin >> algo_choice;
+    cout << endl;
+
+    if (algo_choice == 1) {
+        problem.uniform_cost_search2();
+
+    }
+
+    else if (algo_choice == 2) {
+        problem.a_star_misplaced();
+
+    }
+
+    else if (algo_choice == 3) {
+        problem.a_star_euclid();
+    }
 
 
 }

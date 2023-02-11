@@ -2,6 +2,7 @@
 #include<queue>
 #include <functional>
 #include <cstdlib>
+#include <cmath>
 
 Eight_puzzle::Eight_puzzle() {
     init_node_vals = {1,2,3,4,5,6,7,0,8};
@@ -195,10 +196,158 @@ int Eight_puzzle::misplaced_heuristic(vector<int> check_misplaced) {
 
 
 
-stack<State_node*> Eight_puzzle::a_star_euclid() {
-    stack<State_node*>solution_path;
-    return solution_path;
+void Eight_puzzle::a_star_euclid() {
+          //use a regular queue.
+    vector<pair<int, State_node*>>frontier;
+    states_seen.clear();
+
+    State_node* first_node = new State_node(0, nullptr, 0, init_node_vals);
+
+    first_node->euclidian_heuristic = find_euclidian_distance(first_node->eight_puzzle_node_values);
+    first_node->utility = first_node->cost_to_node + first_node->euclidian_heuristic;
+    frontier.push_back(make_pair(first_node->utility, first_node));
+
+    State_node* path_node = nullptr;
+    vector<State_node*> expanded_nodes;
+    State_node* expanding_node = nullptr;
+    State_node* temp_node = nullptr;
+    bool is_duplicate = false;
+
+    //vector<State_node*>solution_nodes;
+
+    while (1) {
+        
+        if (frontier.empty()) {
+            cout << "IMPOSSIBLE PUZZLE. FRONTIER EMPTY" << endl;
+            exit(-2);
+        }
+
+        sort(frontier.rbegin(), frontier.rend());
+        pair<int, State_node*> top = frontier.back();
+        frontier.pop_back();
+
+        if (top.second -> eight_puzzle_node_values == goal_node_vals) {
+            path_node = top.second;
+            //solution_nodes.push_back(path_node);
+            print_path_taken(path_node);
+            return;
+            
+            
+
+        }
+
+        states_seen.push_back(top.second->eight_puzzle_node_values);
+        expanding_node = top.second;
+        expanded_nodes = expanding_node->nodes_expanded();
+
+        for(int i = 0; i < expanded_nodes.size(); i++) {
+
+            for (int j = 0; j < states_seen.size(); j++) {
+                
+                if (expanded_nodes.at(i)->eight_puzzle_node_values == states_seen.at(j)) {
+                    is_duplicate = true;
+                } 
+            }
+
+            if (is_duplicate == false) {
+                expanded_nodes.at(i)->euclidian_heuristic = find_euclidian_distance(expanded_nodes.at(i)->eight_puzzle_node_values);
+                expanded_nodes.at(i)->utility = expanded_nodes.at(i)->euclidian_heuristic + expanded_nodes.at(i)->cost_to_node;
+                frontier.push_back(make_pair(expanded_nodes.at(i)->utility, expanded_nodes.at(i)));
+                sort(frontier.rbegin(), frontier.rend());
+
+            }
+
+            is_duplicate = false;
+
+
+
+        }
+
+    }
+
+    print_path_taken(path_node);
+
 }
+
+double Eight_puzzle::find_euclidian_distance(vector<int> check_misplaced) {
+    vector<vector<int>> goal_to_2d{{0,0,0},{0,0,0},{0,0,0}};
+    vector<vector<int>> misplaced_to_2d {{0,0,0},{0,0,0},{0,0,0}};
+    double euclidian_tile_sum = 0;
+
+    unordered_map<int, pair<int, int>> goal_value_to_coords;
+    pair<int, int>coords;
+
+    int one_d_index_counter = 0;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            goal_to_2d[i][j] = goal_node_vals.at(one_d_index_counter);
+            misplaced_to_2d[i][j] = check_misplaced.at(one_d_index_counter);
+            
+            coords.first = i;
+            coords.second = j;
+            goal_value_to_coords[goal_node_vals.at(one_d_index_counter)] = coords;
+
+            one_d_index_counter++;
+        }
+    }
+
+
+
+    int x2 = 0;
+    int x1 = 0;
+    int y2 = 0;
+    int y1 = 0;
+
+    pair<int, int> temp_coords;
+
+    for (int i = 0; i < misplaced_to_2d.size(); i++) {
+
+        for (int j = 0; j < misplaced_to_2d.at(i).size(); j++) {
+
+            x1 = i;
+            y1 = j;
+
+            temp_coords = goal_value_to_coords[misplaced_to_2d.at(i).at(j)];
+
+            x2 = temp_coords.first;
+            y2 = temp_coords.second;
+
+            euclidian_tile_sum += calculate_euclidian(x2, x1, y2, y1);
+
+        }
+
+    }
+
+    return euclidian_tile_sum;
+
+
+
+}
+
+
+
+double Eight_puzzle::calculate_euclidian(int x2, int x1, int y2, int y1) {
+    int x2_minus_x1 = x2 - x1;
+    int y2_minus_y1 = y2 - y1;
+
+    int pow_x2_minus_x1 = pow(x2_minus_x1, 2);
+    int pow_y2_minus_y1 = pow(y2_minus_y1, 2);
+
+    int adding = pow_x2_minus_x1 + pow_y2_minus_y1;
+
+    double final_sqrt = sqrt(adding);
+
+    return final_sqrt;
+
+
+}
+
+
+
+
+
+
 
 void Eight_puzzle::print_repeats() {
     cout << "\n\n----REPEAT STATES----\n\n";
@@ -303,8 +452,9 @@ void Eight_puzzle::print_path_taken(State_node* sol_path) {
     cout << "\n\n--PRINITING PATH--\n\n";
     while(temp_node != nullptr) {
         temp_node->print_node_state();
-        cout << "cost to node: " << temp_node->cost_to_node << endl;
-        cout << "Heuristic: " << temp_node->heuristic_value << endl << endl;
+        cout << "cost to node (Depth): " << temp_node->cost_to_node << endl;
+        cout << "Euclidian Heuristic: " << temp_node->euclidian_heuristic << endl;
+        cout << "Misplaced Heuristic: " << temp_node->heuristic_value << endl << endl;
         temp_node = temp_node->parent_state;
     }
 }

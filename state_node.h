@@ -18,6 +18,7 @@ class State_node {
         int cost_to_node; // same as depth all costs are the same
         vector<int> eight_puzzle_node_values;
         int heuristic_value = 0;
+        double euclidian_heuristic = 0;
         int utility;
 
 
